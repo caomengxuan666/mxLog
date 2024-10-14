@@ -4,6 +4,7 @@
 #include <string>
 #include <stdexcept>
 
+
 namespace cmx::Log {
 
     enum class LogLevel {

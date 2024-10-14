@@ -16,6 +16,7 @@ add_executable(mxLog src/main.cpp
         src/console_appender.cpp
         src/file_appender.cpp
         src/formatter.cpp
+        include/LogManager.hpp
 )
 
 target_include_directories(mxLog PRIVATE include)
