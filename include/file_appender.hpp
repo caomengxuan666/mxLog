@@ -10,6 +10,7 @@ namespace cmx::Log {
     public:
         explicit FileAppender(const std::string& filename);
         void append(const std::string& formattedMessage) override;
+        std::string removeControlChars(const std::string& input);
 
     private:
         std::ofstream m_fileStream;
