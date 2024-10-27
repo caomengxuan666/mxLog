@@ -1,9 +1,8 @@
 #ifndef MXLOG_LOGLEVEL_HPP
 #define MXLOG_LOGLEVEL_HPP
 
-#include <string>
 #include <stdexcept>
-
+#include <string>
 
 namespace cmx::Log {
 
@@ -12,8 +11,19 @@ namespace cmx::Log {
         Info,
         Warning,
         Error,
-        Fatal
+        Fatal,
+        LogSystem
     };
+
+    inline namespace colors {
+        constexpr const char *Reset = "\033[0m";
+        constexpr const char *Debug = "\033[0;37m";
+        constexpr const char *Info = "\033[0;32m";
+        constexpr const char *Warning = "\033[0;33m";
+        constexpr const char *Error = "\033[0;31m";
+        constexpr const char *Fatal = "\033[0;35m";
+        constexpr const char *LogSystem = "\033[1;36m";
+    }// namespace colors
 
     namespace LogLevelImpl {
         static std::string toString(LogLevel level) {
@@ -28,38 +38,34 @@ namespace cmx::Log {
                     return "Error";
                 case LogLevel::Fatal:
                     return "Fatal";
+                case LogLevel::LogSystem:
+                    return "LogSystem";
                 default:
                     throw std::invalid_argument("Invalid LogLevel");
             }
         }
 
-        static const char* toColor(LogLevel level) {
+        static const char *toColor(LogLevel level) {
             switch (level) {
                 case LogLevel::Debug:
-                    return "\033[0;37m";
+                    return colors::Debug;
                 case LogLevel::Info:
-                    return "\033[0;32m";
+                    return colors::Info;
                 case LogLevel::Warning:
-                    return "\033[0;33m";
+                    return colors::Warning;
                 case LogLevel::Error:
-                    return "\033[0;31m";
+                    return colors::Error;
                 case LogLevel::Fatal:
-                    return "\033[0;35m";
+                    return colors::Fatal;
+                case LogLevel::LogSystem:
+                    return colors::LogSystem;
                 default:
-                    return "\033[0;37m";
+                    return colors::Debug;// 默认颜色
             }
         }
-    }
+    }// namespace LogLevelImpl
 
-    inline namespace colors {
-        constexpr const char* Reset = "\033[0m";
-        constexpr const char* Debug = "\033[0;37m";
-        constexpr const char* Info = "\033[0;32m";
-        constexpr const char* Warning = "\033[0;33m";
-        constexpr const char* Error = "\033[0;31m";
-        constexpr const char* Fatal = "\033[0;35m";
-    }
 
-} // namespace cmx::Log
+}// namespace cmx::Log
 
-#endif // MXLOG_LOGLEVEL_HPP
+#endif// MXLOG_LOGLEVEL_HPP

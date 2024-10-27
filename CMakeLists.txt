@@ -54,7 +54,7 @@ add_library(mxLogLibShared SHARED
 set_target_properties(mxLogLibShared PROPERTIES
         OUTPUT_NAME "mxLogLibShared"
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}  # 确保生成 .dll 文件
-)。
+)
 
 # 添加可执行程序，并链接静态库
 add_executable(mxLogExample example/main.cpp)

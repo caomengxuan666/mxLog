@@ -1,4 +1,4 @@
-#include "file_appender.hpp"
+﻿#include "file_appender.hpp"
 #include <stdexcept>
 #include <regex>
 

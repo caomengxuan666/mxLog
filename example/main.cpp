@@ -1,5 +1,45 @@
 ﻿#include <LogLevel.hpp>
 #include <LogManager.hpp>
+#include <chrono>
+#include <thread>
+void benchmarkTest(){
+    cmx::logManager.log("BenchMarkTest");
+    cmx::logManager.setFileAppender("BenchMarkTest.txt");
+    cmx::logManager.setConsoleAppender();
+
+    constexpr size_t test_epoch = 1000000;
+
+    auto start = std::chrono::high_resolution_clock::now();
+    cmx::logManager.log("Benchmark test");
+    cmx::logManager.setBufferSize(test_epoch/100);
+    cmx::logManager.setOutBufferSize(test_epoch/100);
+
+    cmx::logManager.setCurrentLevel(LogLevel::Info);
+    for (int i = 0; i < test_epoch; i++) {
+        cmx::logManager.log("Benchmark test");
+    }
+
+    cmx::logManager.log("End of Benchmark test");
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+    auto time1=std::to_string(duration);
+
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+
+    start = std::chrono::high_resolution_clock::now();
+    for(int i = 0; i < test_epoch; i++){
+        std::cout << "Benchmark test" << i << "\n";
+        if(i % 1000 == 0){
+            std::cout.flush();
+        }
+    }
+    std::cout<<std::endl;
+    stop = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+    cmx::logManager.log("std::cout test took " + std::to_string(duration) + " milliseconds"+"with"+std::to_string(test_epoch)+" logs");
+    cmx::logManager.log("Benchmark test took " + time1 + " milliseconds"+"with"+std::to_string(test_epoch)+" logs");
+
+}
 
 void manualTest() {
     cmx::logManager.setCurrentLevel(LogLevel::Info);
@@ -45,7 +85,10 @@ void autoTest() {
 
 int main() {
     autoTest();
-    cmx::logManager.setCurrentLevel(LogLevel::Info);
+    cmx::logManager.setCurrentLevel(LogLevel::LogSystem);
     cmx::logManager.log("End of Autotest\t\t\n ************************************************");
     manualTest();
+    cmx::logManager.log("End of Manual test\t\t\n ************************************************");
+    benchmarkTest();
+
 }
