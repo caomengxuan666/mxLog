@@ -88,9 +88,11 @@ void autoTest() {
 
 int main() {
     autoTest();
+    cmx::logger.setOutBufferSize(10);
+    cmx::logger.setBufferSize(10);
     cmx::logger.setCurrentLevel(LogLevel::LogSystem);
     cmx::logger.log("End of Autotest\t\t\n ************************************************");
     manualTest();
     cmx::logger.log("End of Manual test\t\t\n ************************************************");
-    benchmarkTest();
+    //benchmarkTest();
 }

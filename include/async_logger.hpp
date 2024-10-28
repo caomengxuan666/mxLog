@@ -47,6 +47,8 @@ namespace cmx::Log {
         // 新增成员变量
         size_t m_outBufferSize = 1024;             // 默认输出缓冲区大小
         size_t m_bufferSize = 1024;                // 默认通用缓冲区大小
+        bool fileAppenderSet = false;
+        bool consoleAppenderSet = false;
     };
 
 } // namespace cmx::Log

@@ -49,7 +49,7 @@ namespace cmx::Log {
     private:
         // 在构造函数中初始化 `AsyncLogger` 对象
         LogManager() {
-            logger = std::make_unique<AsyncLogger>("GlobalLogger");
+            logger = std::make_unique<AsyncLogger>("CmxLogger");
         }
 
         std::unique_ptr<AsyncLogger> logger;
