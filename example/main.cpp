@@ -113,6 +113,11 @@ int main() {
     std::cout << "Press Enter to continue...\n";
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << std::endl;
+    cmx::logger.clearConsoleBuffer();
+
+
+    std::cin.get();
+
 
     //benchmarkTest();
 }
