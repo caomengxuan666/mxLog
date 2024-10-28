@@ -1,8 +1,8 @@
 ﻿#include <LogLevel.hpp>
 #include <LogManager.hpp>
 #include <chrono>
-#include <thread>
 #include <iostream>
+#include <thread>
 
 
 void benchmarkTest() {
@@ -11,6 +11,7 @@ void benchmarkTest() {
     cmx::logger.setFileAppender("BenchMarkTest.txt");
     cmx::logger.setConsoleAppender();
 
+    //百万级别
     constexpr size_t test_epoch = 1000000;
 
     auto start = std::chrono::high_resolution_clock::now();
@@ -20,28 +21,39 @@ void benchmarkTest() {
 
     cmx::logger.setCurrentLevel(LogLevel::Info);
     for (int i = 0; i < test_epoch; i++) {
-        cmx::logger.log("Benchmark test");
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+        char buffer[20];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&now_c));
+        std::string timestamp = buffer;
+        cmx::logger.log(timestamp + " - Benchmark test " + std::to_string(i));
+        if (i == test_epoch - 1) {
+            cmx::logger.log("End of Benchmark test");
+        }
     }
-
-    cmx::logger.log("End of Benchmark test");
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
     auto time1 = std::to_string(duration);
 
-
-    start = std::chrono::high_resolution_clock::now();
+    auto start2 = std::chrono::high_resolution_clock::now();
+    //然后进行cout的一轮测试
     for (int i = 0; i < test_epoch; i++) {
-        std::cout << "Benchmark test" << i << "\n";
-        if (i % 100 == 0) {
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+        char buffer[20];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&now_c));
+        std::string timestamp = buffer;
+        std::cout << timestamp + " - Benchmark test " + std::to_string(i) << "\n";
+        if (i % 1000 == 0) {
             std::cout.flush();
         }
     }
-    std::cout << std::endl;
-    stop = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-    cmx::logger.log("std::cout test took " + std::to_string(duration) + " milliseconds with " + std::to_string(test_epoch) + " logs");
+    auto stop2 = std::chrono::high_resolution_clock::now();
+    auto duration2 = std::chrono::duration_cast<std::chrono::milliseconds>(stop2 - start2).count();
+    auto time2 = std::to_string(duration2);
 
     cmx::logger.log("Benchmark test took " + time1 + " milliseconds with " + std::to_string(test_epoch) + " logs");
+    cmx::logger.log("cout test took " + time2 + " milliseconds with " + std::to_string(test_epoch) + " logs");
 }
 
 void manualTest() {
@@ -74,10 +86,10 @@ void autoTest() {
 
     // 更多测试消息
     std::string testMessages[] = {
-        "This is a Debug message",
+            "This is a Debug message",
     };
 
-    for (const auto &msg : testMessages) {
+    for (const auto &msg: testMessages) {
         cmx::logger.log(msg, LogLevel::Debug);
         cmx::logger.log(msg, LogLevel::Info);
         cmx::logger.log(msg, LogLevel::Warning);
@@ -88,11 +100,13 @@ void autoTest() {
 
 int main() {
     autoTest();
-    cmx::logger.setOutBufferSize(10);
-    cmx::logger.setBufferSize(10);
+    cmx::logger.setOutBufferSize(1);
+    cmx::logger.setBufferSize(1);
     cmx::logger.setCurrentLevel(LogLevel::LogSystem);
     cmx::logger.log("End of Autotest\t\t\n ************************************************");
     manualTest();
     cmx::logger.log("End of Manual test\t\t\n ************************************************");
+    cmx::logger.clearConsoleBuffer();
+
     benchmarkTest();
 }

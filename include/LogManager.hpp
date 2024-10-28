@@ -46,6 +46,12 @@ namespace cmx::Log {
             logger->setBufferSize(size);
         }
 
+        // 新增接口用于清理控制台缓冲区
+        void clearConsoleBuffer() {
+            logger->clearConsoleBuffer();
+        }
+
+
     private:
         // 在构造函数中初始化 `AsyncLogger` 对象
         LogManager() {

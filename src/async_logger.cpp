@@ -1,7 +1,7 @@
 #include "async_logger.hpp"
-#include "console_appender.hpp"
 #include "file_appender.hpp"
 #include "formatter.hpp"
+#include "appender.hpp"
 
 namespace cmx::Log {
 
@@ -22,12 +22,13 @@ namespace cmx::Log {
     }
 
     void AsyncLogger::setOutBufferSize(size_t size) {
-        m_outBufferSize = size;
+        m_consoleAppender->setBufferSize(size);
+
         log(LogLevel::LogSystem, "The output buffer size has been changed to: " + std::to_string(size));
     }
 
     void AsyncLogger::setBufferSize(size_t size) {
-        m_bufferSize = size;
+        m_fileAppender->setBufferSize(size);
         log(LogLevel::LogSystem, "The buffer size has been changed to: " + std::to_string(size));
     }
 
@@ -40,16 +41,19 @@ namespace cmx::Log {
     }
 
     void AsyncLogger::setFileAppender(const std::string &filePath) {
+        // 创建一个文件日志记录器
         m_fileAppender = std::make_shared<FileAppender>(filePath);
+        // 设置日志格式
         m_fileAppender->setFormatter(std::make_unique<SimpleFormatter>());
         fileAppenderSet = true;
     }
 
-    void AsyncLogger::setConsoleAppender() {
+    void cmx::Log::AsyncLogger::setConsoleAppender() {
         m_consoleAppender = std::make_shared<ConsoleAppender>();
         m_consoleAppender->setFormatter(std::make_unique<SimpleFormatter>());
         consoleAppenderSet = true;
     }
+
 
     void AsyncLogger::workerThread() {
         while (true) {
@@ -68,7 +72,9 @@ namespace cmx::Log {
 
     void AsyncLogger::formatAndAppend(const std::string &message, LogLevel level) {
         // 获取格式化的日志消息
-        std::string formattedMessage = "[" + m_name + "] " + LogLevelImpl::toColor(level) + "["+LogLevelImpl::toString(level) + "] : " + message + colors::Reset;
+
+        std::string formattedMessage = m_fileAppender->formatMessage(message, level);
+        //std::string formattedMessage = "[" + m_name + "] " + LogLevelImpl::toColor(level) + "["+LogLevelImpl::toString(level) + "] : " + message + colors::Reset;
 
         // 将日志消息写入到文件和控制台
         if (fileAppenderSet) {
@@ -78,5 +84,12 @@ namespace cmx::Log {
             m_consoleAppender->append(formattedMessage);
         }
     }
+
+    void cmx::Log::AsyncLogger::clearConsoleBuffer() {
+        if (consoleAppenderSet) {
+            m_consoleAppender->freeRestOfBuffer(); // 直接访问 ConsoleAppender 的方法
+        }
+    }
+
 
 } // namespace cmx::Log

@@ -9,6 +9,7 @@
 #include <string>
 #include "LogLevel.hpp"
 #include "appender.hpp"
+#include "console_appender.hpp"
 
 namespace cmx::Log {
 
@@ -29,6 +30,9 @@ namespace cmx::Log {
         void setOutBufferSize(size_t size);        // 设置输出缓冲区大小
         void setBufferSize(size_t size);           // 设置通用缓冲区大小
 
+        // 清理控制台缓冲区接口
+        void clearConsoleBuffer();
+
     private:
         void workerThread();
         void formatAndAppend(const std::string& message, LogLevel level);
@@ -36,7 +40,8 @@ namespace cmx::Log {
         std::string m_name;
         LogLevel m_level;
         std::shared_ptr<Appender> m_fileAppender;
-        std::shared_ptr<Appender> m_consoleAppender;
+        std::shared_ptr<ConsoleAppender> m_consoleAppender;
+
 
         std::queue<std::pair<LogLevel, std::string>> m_messageQueue;
         std::mutex m_mutex;
@@ -45,8 +50,6 @@ namespace cmx::Log {
         bool m_stopWorker = false;
 
         // 新增成员变量
-        size_t m_outBufferSize = 1024;             // 默认输出缓冲区大小
-        size_t m_bufferSize = 1024;                // 默认通用缓冲区大小
         bool fileAppenderSet = false;
         bool consoleAppenderSet = false;
     };

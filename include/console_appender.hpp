@@ -2,22 +2,25 @@
 #define CONSOLE_APPENDER_HPP
 
 #include "appender.hpp"
-#include <vector>
 #include <string>
+#include <string_view>
+#include <vector>
 
 namespace cmx::Log {
 
     class ConsoleAppender : public Appender {
     public:
-        ConsoleAppender(size_t bufferSize = 128); // 默认缓存区大小为 128
-        void append(const std::string& formattedMessage) override;
+        ConsoleAppender(size_t bufferSize = 4096); // 默认缓存区大小为 4096
+        inline void append(const std::string &formattedMessage) noexcept override;
         ~ConsoleAppender(); // 确保析构时清空缓冲区
 
-        //设置输出缓冲区大小
-        void setupOutBufferSize(size_t newSize);
+        // 设置输出缓冲区大小
+        void setBufferSize(size_t newSize) override;
+        void freeRestOfBuffer();
 
     private:
-        std::vector<std::string> messageBuffer; // 缓存区
+        std::vector<std::string> messageStorage; // 存储实际的字符串数据
+        std::vector<std::string_view> messageBuffer; // 缓存区
         size_t bufferSize; // 缓存区大小
 
         void flushBuffer(); // 批量输出

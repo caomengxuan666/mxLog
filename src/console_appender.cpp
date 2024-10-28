@@ -1,39 +1,51 @@
 #include "console_appender.hpp"
 #include <iostream>
+#include <sstream>
 
 namespace cmx::Log {
 
     ConsoleAppender::ConsoleAppender(size_t bufferSize)
-        : bufferSize(bufferSize) {}
+        : bufferSize(bufferSize), messageBuffer(bufferSize) {}
 
-    void ConsoleAppender::append(const std::string& formattedMessage) {
-        // 添加消息到缓存区
-        messageBuffer.push_back(formattedMessage);
+    inline void ConsoleAppender::append(const std::string &formattedMessage) noexcept {
+        // 将实际的字符串数据存储在 messageStorage 中
+        messageStorage.push_back(formattedMessage);
+
+        // 使用 string_view 引用 messageStorage 中的字符串
+        messageBuffer.emplace_back(messageStorage.back());
 
         // 当缓存区达到指定大小时批量输出
         if (messageBuffer.size() >= bufferSize) {
             flushBuffer();
+            messageBuffer.clear(); // 清空缓存区
+            std::cout.flush();     // 刷新缓冲区
         }
     }
 
     void ConsoleAppender::flushBuffer() {
-        for (const auto& message : messageBuffer) {
-            printf("%s\n", message.c_str());
+        std::stringstream ss;
+        for (const auto &message : messageBuffer) {
+            ss << message << "\n";
         }
-        messageBuffer.clear();           // 清空缓存区
-        //刷新缓冲区
-        std::cout.flush();
+        std::cout << ss.str();
+    }
+
+    void ConsoleAppender::freeRestOfBuffer() {
+        if (!messageBuffer.empty()) {
+            flushBuffer();
+            messageBuffer.clear();
+            std::cout.flush();
+        }
     }
 
     ConsoleAppender::~ConsoleAppender() {
         // 确保析构时输出所有剩余消息
-        if (!messageBuffer.empty()) {
-            flushBuffer();
-        }
+        freeRestOfBuffer();
     }
 
-    void ConsoleAppender::setupOutBufferSize(size_t newSize) {
+    void ConsoleAppender::setBufferSize(size_t newSize) {
         bufferSize = newSize;
+        messageBuffer.resize(newSize); // 调整缓存区大小
     }
 
 } // namespace cmx::Log

@@ -16,7 +16,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2")
 
 # 添加静态库
 add_library(mxLogLib STATIC
-        src/config.cpp
         src/console_appender.cpp
         src/file_appender.cpp
         src/formatter.cpp
@@ -25,7 +24,6 @@ add_library(mxLogLib STATIC
         include/console_appender.hpp
         include/file_appender.hpp
         include/formatter.hpp
-        include/config.hpp
         include/logger.hpp
         include/LogLevel.hpp
         include/LogManager.hpp
@@ -40,7 +38,6 @@ set_target_properties(mxLogLib PROPERTIES
 
 # 添加动态库
 add_library(mxLogLibShared SHARED
-        src/config.cpp
         src/console_appender.cpp
         src/file_appender.cpp
         src/formatter.cpp
@@ -49,7 +46,6 @@ add_library(mxLogLibShared SHARED
         include/console_appender.hpp
         include/file_appender.hpp
         include/formatter.hpp
-        include/config.hpp
         include/logger.hpp
         include/LogLevel.hpp
         include/LogManager.hpp
