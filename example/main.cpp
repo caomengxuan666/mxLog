@@ -94,5 +94,5 @@ int main() {
     cmx::logger.log("End of Autotest\t\t\n ************************************************");
     manualTest();
     cmx::logger.log("End of Manual test\t\t\n ************************************************");
-    //benchmarkTest();
+    benchmarkTest();
 }
