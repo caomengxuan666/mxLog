@@ -9,7 +9,7 @@ namespace cmx::Log {
 
     inline void ConsoleAppender::append(const std::string &formattedMessage) noexcept {
         // 将实际的字符串数据存储在 messageStorage 中
-        messageStorage.push_back(formattedMessage);
+        messageStorage.emplace_back(formattedMessage);
 
         // 使用 string_view 引用 messageStorage 中的字符串
         messageBuffer.emplace_back(messageStorage.back());

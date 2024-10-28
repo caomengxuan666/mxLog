@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.27)
 project(mxLog)
 
 set(CMAKE_CXX_STANDARD 17)
+# 由于我引入string_view，必须要求C++17
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 包含目录
 include_directories(include)
