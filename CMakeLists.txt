@@ -80,6 +80,14 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib/Release")
 endif()
 
+#设置pybind路径D:\MyLibs\pybind11
+#添加CMAKE_PREFIX_PATH，用于搜索依赖项的头文件和库文件
+list(APPEND CMAKE_PREFIX_PATH "D:/MyLibs/pybind11")
+# 引入 pybind11 并添加 python_module 子目录
+find_package(pybind11 REQUIRED)
+add_subdirectory(python_module)
+
+
 # 安装规则：将生成的 dll 和 lib 文件复制到项目源码目录的 lib 文件夹
 install(TARGETS mxLogLib mxLogLibShared mxLogExample
         RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin
