@@ -11,6 +11,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)  # 静态库输出路径
 
+# 开启O2优化
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2")
+
 # 添加静态库
 add_library(mxLogLib STATIC
         src/config.cpp
@@ -26,6 +29,7 @@ add_library(mxLogLib STATIC
         include/logger.hpp
         include/LogLevel.hpp
         include/LogManager.hpp
+        src/async_logger.cpp
 )
 
 # 设置静态库的输出名称和路径
@@ -49,6 +53,7 @@ add_library(mxLogLibShared SHARED
         include/logger.hpp
         include/LogLevel.hpp
         include/LogManager.hpp
+        src/async_logger.cpp
 )
 # 设置动态库的输出名称和路径
 set_target_properties(mxLogLibShared PROPERTIES

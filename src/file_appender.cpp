@@ -19,6 +19,7 @@ namespace cmx::Log {
 
         // 写入文件
         m_fileStream << cleanMessage << std::endl;
+        // 刷新缓冲区
         m_fileStream.flush();
     }
 

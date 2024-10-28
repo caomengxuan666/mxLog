@@ -2,93 +2,95 @@
 #include <LogManager.hpp>
 #include <chrono>
 #include <thread>
-void benchmarkTest(){
-    cmx::logManager.log("BenchMarkTest");
-    cmx::logManager.setFileAppender("BenchMarkTest.txt");
-    cmx::logManager.setConsoleAppender();
+#include <iostream>
+
+
+void benchmarkTest() {
+    cmx::logger.log("LogManager Init");
+    cmx::logger.log("BenchMarkTest Start", LogLevel::Info);
+    cmx::logger.setFileAppender("BenchMarkTest.txt");
+    cmx::logger.setConsoleAppender();
 
     constexpr size_t test_epoch = 1000000;
 
     auto start = std::chrono::high_resolution_clock::now();
-    cmx::logManager.log("Benchmark test");
-    cmx::logManager.setBufferSize(test_epoch/100);
-    cmx::logManager.setOutBufferSize(test_epoch/100);
+    cmx::logger.log("Benchmark test");
+    cmx::logger.setBufferSize(test_epoch / 10);
+    cmx::logger.setOutBufferSize(test_epoch / 10);
 
-    cmx::logManager.setCurrentLevel(LogLevel::Info);
+    cmx::logger.setCurrentLevel(LogLevel::Info);
     for (int i = 0; i < test_epoch; i++) {
-        cmx::logManager.log("Benchmark test");
+        cmx::logger.log("Benchmark test");
     }
 
-    cmx::logManager.log("End of Benchmark test");
+    cmx::logger.log("End of Benchmark test");
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-    auto time1=std::to_string(duration);
+    auto time1 = std::to_string(duration);
 
-    std::this_thread::sleep_for(std::chrono::seconds(3));
 
     start = std::chrono::high_resolution_clock::now();
-    for(int i = 0; i < test_epoch; i++){
+    for (int i = 0; i < test_epoch; i++) {
         std::cout << "Benchmark test" << i << "\n";
-        if(i % 1000 == 0){
+        if (i % 100 == 0) {
             std::cout.flush();
         }
     }
-    std::cout<<std::endl;
+    std::cout << std::endl;
     stop = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-    cmx::logManager.log("std::cout test took " + std::to_string(duration) + " milliseconds"+"with"+std::to_string(test_epoch)+" logs");
-    cmx::logManager.log("Benchmark test took " + time1 + " milliseconds"+"with"+std::to_string(test_epoch)+" logs");
+    cmx::logger.log("std::cout test took " + std::to_string(duration) + " milliseconds with " + std::to_string(test_epoch) + " logs");
 
+    cmx::logger.log("Benchmark test took " + time1 + " milliseconds with " + std::to_string(test_epoch) + " logs");
 }
 
 void manualTest() {
-    cmx::logManager.setCurrentLevel(LogLevel::Info);
-    cmx::logManager.log("manualTest");
+    cmx::logger.setCurrentLevel(LogLevel::Info);
+    cmx::logger.log("manualTest");
 
-    cmx::logManager.setFileAppender("logAuto.txt");
-    cmx::logManager.setConsoleAppender();
-    cmx::logManager.setCurrentLevel(LogLevel::Debug);
+    cmx::logger.setFileAppender("logAuto.txt");
+    cmx::logger.setConsoleAppender();
+    cmx::logger.setCurrentLevel(LogLevel::Debug);
     std::string message = "Debug message";
-    cmx::logManager.log(message);
-    cmx::logManager.setCurrentLevel(LogLevel::Error);
-    cmx::logManager.log("Error message");
-    cmx::logManager.setCurrentLevel(LogLevel::Fatal);
-    cmx::logManager.log("Fatal message");
-    cmx::logManager.setCurrentLevel(LogLevel::Info);
-    cmx::logManager.log("Info message");
-    cmx::logManager.setCurrentLevel(LogLevel::Warning);
-    cmx::logManager.log("Warning message");
+    cmx::logger.log(message);
+    cmx::logger.setCurrentLevel(LogLevel::Error);
+    cmx::logger.log("Error message");
+    cmx::logger.setCurrentLevel(LogLevel::Fatal);
+    cmx::logger.log("Fatal message");
+    cmx::logger.setCurrentLevel(LogLevel::Info);
+    cmx::logger.log("Info message");
+    cmx::logger.setCurrentLevel(LogLevel::Warning);
+    cmx::logger.log("Warning message");
 }
 
-//手动版本
+// 手动版本
 void autoTest() {
     // 设置文件日志记录器
-    cmx::logManager.setFileAppender("log.txt");
+    cmx::logger.setFileAppender("log.txt");
     // 设置控制台日志记录器
-    cmx::logManager.setConsoleAppender();
+    cmx::logger.setConsoleAppender();
     std::string message = "AUTO TEST";
-    cmx::logManager.log(message, cmx::Log::LogLevel::Info);
+    cmx::logger.log(message, LogLevel::Info);
 
     // 更多测试消息
     std::string testMessages[] = {
-            "This is a Debug message",
+        "This is a Debug message",
     };
 
-    for (const auto &msg: testMessages) {
-        cmx::logManager.log(msg, cmx::LogLevel::Debug);
-        cmx::logManager.log(msg, cmx::LogLevel::Info);
-        cmx::logManager.log(msg, cmx::LogLevel::Warning);
-        cmx::logManager.log(msg, cmx::LogLevel::Error);
-        cmx::logManager.log(msg, cmx::LogLevel::Fatal);
+    for (const auto &msg : testMessages) {
+        cmx::logger.log(msg, LogLevel::Debug);
+        cmx::logger.log(msg, LogLevel::Info);
+        cmx::logger.log(msg, LogLevel::Warning);
+        cmx::logger.log(msg, LogLevel::Error);
+        cmx::logger.log(msg, LogLevel::Fatal);
     }
 }
 
 int main() {
     autoTest();
-    cmx::logManager.setCurrentLevel(LogLevel::LogSystem);
-    cmx::logManager.log("End of Autotest\t\t\n ************************************************");
+    cmx::logger.setCurrentLevel(LogLevel::LogSystem);
+    cmx::logger.log("End of Autotest\t\t\n ************************************************");
     manualTest();
-    cmx::logManager.log("End of Manual test\t\t\n ************************************************");
+    cmx::logger.log("End of Manual test\t\t\n ************************************************");
     benchmarkTest();
-
 }

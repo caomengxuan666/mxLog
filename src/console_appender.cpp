@@ -1,6 +1,5 @@
 #include "console_appender.hpp"
 #include <iostream>
-#include <LogManager.hpp>
 
 namespace cmx::Log {
 
@@ -19,10 +18,11 @@ namespace cmx::Log {
 
     void ConsoleAppender::flushBuffer() {
         for (const auto& message : messageBuffer) {
-            std::cout << message << "\n"; // 使用 \n 替代 std::endl
+            printf("%s\n", message.c_str());
         }
         messageBuffer.clear();           // 清空缓存区
-        std::cout.flush();               // 一次性刷新
+        //刷新缓冲区
+        std::cout.flush();
     }
 
     ConsoleAppender::~ConsoleAppender() {

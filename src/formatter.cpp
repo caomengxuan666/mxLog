@@ -12,7 +12,7 @@ namespace cmx::Log {
         const char* resetColor = colors::Reset;
         std::string logLevelStr = LogLevelImpl::toString(level);
 
-        char buffer[256];
+        char buffer[1024];
         snprintf(buffer, sizeof(buffer), "%s[%s]%s %s%s%s",
                  color, logLevelStr.c_str(), resetColor, color, message.c_str(), resetColor);
 
