@@ -5,3 +5,11 @@
 /cmake-build-release-visual-studio
 
 /cmake-build-debug-visual-studio
+
+/cmake-build-debug-visual-studio/bin
+
+/cmake-build-debug-visual-studio/lib
+
+/cmake-build-release-visual-studio/bin
+
+/cmake-build-release-visual-studio/lib
