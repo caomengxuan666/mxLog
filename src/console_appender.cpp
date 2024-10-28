@@ -5,7 +5,7 @@
 namespace cmx::Log {
 
     ConsoleAppender::ConsoleAppender(size_t bufferSize)
-        : bufferSize(bufferSize), messageBuffer(bufferSize) {}
+        : bufferSize(bufferSize){}
 
     inline void ConsoleAppender::append(const std::string &formattedMessage) noexcept {
         // 将实际的字符串数据存储在 messageStorage 中
@@ -25,7 +25,10 @@ namespace cmx::Log {
     void ConsoleAppender::flushBuffer() {
         std::stringstream ss;
         for (const auto &message : messageBuffer) {
-            ss << message << "\n";
+            if (!message.empty()) { // 确保消息不为空
+                ss << message << "\n";
+            }
+
         }
         std::cout << ss.str();
     }
@@ -45,6 +48,8 @@ namespace cmx::Log {
 
     void ConsoleAppender::setBufferSize(size_t newSize) {
         bufferSize = newSize;
+        freeRestOfBuffer();
+        messageBuffer.clear(); // 先清空
         messageBuffer.resize(newSize); // 调整缓存区大小
     }
 

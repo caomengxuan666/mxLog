@@ -51,6 +51,10 @@ namespace cmx::Log {
             logger->clearConsoleBuffer();
         }
 
+        void setLoggerName(const std::string& name){
+            logger->setLoggerName(name);
+        }
+
 
     private:
         // 在构造函数中初始化 `AsyncLogger` 对象

@@ -10,6 +10,7 @@ void benchmarkTest() {
     cmx::logger.log("BenchMarkTest Start", LogLevel::Info);
     cmx::logger.setFileAppender("BenchMarkTest.txt");
     cmx::logger.setConsoleAppender();
+    cmx::logger.setLoggerName("cmxLogger");
 
     //百万级别
     constexpr size_t test_epoch = 1000000;
@@ -107,6 +108,11 @@ int main() {
     manualTest();
     cmx::logger.log("End of Manual test\t\t\n ************************************************");
     cmx::logger.clearConsoleBuffer();
+
+
+    std::cout << "Press Enter to continue...\n";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << std::endl;
 
     //benchmarkTest();
 }

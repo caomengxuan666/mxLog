@@ -1,7 +1,7 @@
 #include "async_logger.hpp"
+#include "appender.hpp"
 #include "file_appender.hpp"
 #include "formatter.hpp"
-#include "appender.hpp"
 
 namespace cmx::Log {
 
@@ -34,7 +34,7 @@ namespace cmx::Log {
 
     void AsyncLogger::log(LogLevel level, const std::string &message) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        if (level >= m_level) { // 仅记录等于或高于当前级别的日志
+        if (level >= m_level) {// 仅记录等于或高于当前级别的日志
             m_messageQueue.emplace(level, message);
             m_condition.notify_one();
         }
@@ -75,7 +75,8 @@ namespace cmx::Log {
 
         std::string formattedMessage = m_fileAppender->formatMessage(message, level);
         //std::string formattedMessage = "[" + m_name + "] " + LogLevelImpl::toColor(level) + "["+LogLevelImpl::toString(level) + "] : " + message + colors::Reset;
-
+        //前面插入一个m_name
+        formattedMessage.insert(0, "[ " + m_name + " ]"+":");
         // 将日志消息写入到文件和控制台
         if (fileAppenderSet) {
             m_fileAppender->append(formattedMessage);
@@ -87,9 +88,20 @@ namespace cmx::Log {
 
     void cmx::Log::AsyncLogger::clearConsoleBuffer() {
         if (consoleAppenderSet) {
-            m_consoleAppender->freeRestOfBuffer(); // 直接访问 ConsoleAppender 的方法
+            m_consoleAppender->freeRestOfBuffer();// 直接访问 ConsoleAppender 的方法
         }
     }
 
+    void AsyncLogger::setLoggerName(const std::string &name) {
+        m_name = name;
+    }
 
-} // namespace cmx::Log
+    void AsyncLogger::hideLoggerName() {
+        displayLoggerName= false;
+    }
+    void AsyncLogger::showLoggerName() {
+        displayLoggerName= true;
+    }
+
+
+}// namespace cmx::Log

@@ -29,9 +29,14 @@ namespace cmx::Log {
         void setLogLevel(LogLevel level);          // 设置日志级别
         void setOutBufferSize(size_t size);        // 设置输出缓冲区大小
         void setBufferSize(size_t size);           // 设置通用缓冲区大小
+        void setLoggerName(const std::string& name);
 
         // 清理控制台缓冲区接口
         void clearConsoleBuffer();
+
+        //显示和隐藏 日志名称
+        void hideLoggerName();
+        void showLoggerName();
 
     private:
         void workerThread();
@@ -52,6 +57,7 @@ namespace cmx::Log {
         // 新增成员变量
         bool fileAppenderSet = false;
         bool consoleAppenderSet = false;
+        bool displayLoggerName= false;
     };
 
 } // namespace cmx::Log
