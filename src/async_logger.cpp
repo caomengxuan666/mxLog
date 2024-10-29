@@ -76,7 +76,9 @@ namespace cmx::Log {
         std::string formattedMessage = m_fileAppender->formatMessage(message, level);
         //std::string formattedMessage = "[" + m_name + "] " + LogLevelImpl::toColor(level) + "["+LogLevelImpl::toString(level) + "] : " + message + colors::Reset;
         //前面插入一个m_name
-        formattedMessage.insert(0, "[ " + m_name + " ]"+":");
+        if (displayLoggerName) {
+            formattedMessage.insert(0, "[ " + m_name + " ]" + ":");
+        }
         // 将日志消息写入到文件和控制台
         if (fileAppenderSet) {
             m_fileAppender->append(formattedMessage);
@@ -94,13 +96,16 @@ namespace cmx::Log {
 
     void AsyncLogger::setLoggerName(const std::string &name) {
         m_name = name;
+        log(LogLevel::LogSystem, "The logger name has been changed to: " + name);
     }
 
     void AsyncLogger::hideLoggerName() {
-        displayLoggerName= false;
+        displayLoggerName = false;
+        log(LogLevel::LogSystem, "The logger name has been hidden.");
     }
     void AsyncLogger::showLoggerName() {
-        displayLoggerName= true;
+        displayLoggerName = true;
+        log(LogLevel::LogSystem, "The logger name has been shown.");
     }
 
 

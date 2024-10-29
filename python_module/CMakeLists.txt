@@ -3,7 +3,7 @@ project(mxLogPy)
 
 # 添加 Python 模块
 pybind11_add_module(mxLogPy MODULE
-        ../include/LogManager.hpp
+    pybind_wrapper.cpp
 )
 
 # 将 mxLogLib 链接到 Python 模块中
