@@ -3,6 +3,9 @@ sys.path.append('D:/study/mxLog/lib/DEBUG')
 import mxLogPy as mxLog
 import time
 
+
+
+
 def manual_test():
     # 获取 LogManager 单例实例
     logger = mxLog.LogManager.getInstance()
@@ -32,7 +35,7 @@ def benchMark():
     #设置输出缓冲区
 
     # 设置输出缓冲区大小 64KB
-    logger.setOutBufferSize()
+    logger.setOutBufferSize(64)
 
     # 记录开始时间
     start = time.time()
