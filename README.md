@@ -4,6 +4,8 @@
 
 MxLog是一个基于C++的轻量级日志库
 
+同时包含了C++接口和Python接口
+
 实现了多种级别的不同日志输出，支持不同颜色打印，支持异步输出
 
 ### 日志等级分为
@@ -216,3 +218,12 @@ install(FILES ${DLL_FILES} ${MXLOGLIB_DLL_FILES} DESTINATION bin)
 
 ~~~
 
+# python接口
+
+## 编译方式
+~~~
+   cd mxLog_Py
+   python setup.py build_ext --inplace
+   python setup.py install
+~~~
+   

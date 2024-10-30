@@ -1,8 +1,5 @@
-import sys
 import mxLogPy as mxLog
 import time
-
-
 def manual_test():
     # 获取 LogManager 单例实例
     logger = mxLog.LogManager.getInstance()
