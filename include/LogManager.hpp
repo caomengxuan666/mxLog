@@ -55,6 +55,14 @@ namespace cmx::Log {
             logger->setLoggerName(name);
         }
 
+        void hideLogerName(){
+            logger->hideLoggerName();
+        }
+
+        void showLogerName(){
+            logger->showLoggerName();
+        }
+
 
     private:
         // 在构造函数中初始化 `AsyncLogger` 对象

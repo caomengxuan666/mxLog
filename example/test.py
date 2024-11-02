@@ -1,5 +1,7 @@
 import mxLogPy as mxLog
 import time
+import os
+
 def manual_test():
     # 获取 LogManager 单例实例
     logger = mxLog.LogManager.getInstance()
@@ -7,6 +9,7 @@ def manual_test():
     logger.setFileAppender("logAuto.txt")
     # 设置控制台追加器
     logger.setConsoleAppender()
+    logger.setLoggerName("mxLog")
 
     logger.setOutBufferSize(10)
     logger.setBufferSize(10)

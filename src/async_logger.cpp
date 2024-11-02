@@ -97,6 +97,9 @@ namespace cmx::Log {
     void AsyncLogger::setLoggerName(const std::string &name) {
         m_name = name;
         log(LogLevel::LogSystem, "The logger name has been changed to: " + name);
+        showLoggerName();
+        log(LogLevel::LogSystem, "You can hide the logger name by calling hideLoggerName() method." + name);
+
     }
 
     void AsyncLogger::hideLoggerName() {

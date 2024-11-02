@@ -101,6 +101,7 @@ void autoTest() {
 
 int main() {
     autoTest();
+    cmx::logger.setLoggerName("cmxLogger");
     cmx::logger.setOutBufferSize(1024);
     cmx::logger.setBufferSize(1024);
     cmx::logger.setCurrentLevel(LogLevel::LogSystem);
