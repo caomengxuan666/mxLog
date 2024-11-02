@@ -52,7 +52,7 @@ void benchmarkTest() {
     auto stop2 = std::chrono::high_resolution_clock::now();
     auto duration2 = std::chrono::duration_cast<std::chrono::milliseconds>(stop2 - start2).count();
     auto time2 = std::to_string(duration2);
-
+    cmx::logger.hideLoggerName();
     cmx::logger.log("Benchmark test took " + time1 + " milliseconds with " + std::to_string(test_epoch) + " logs");
     cmx::logger.log("cout test took " + time2 + " milliseconds with " + std::to_string(test_epoch) + " logs");
 }
@@ -94,9 +94,11 @@ void autoTest() {
         cmx::logger.log(msg, LogLevel::Debug);
         cmx::logger.log(msg, LogLevel::Info);
         cmx::logger.log(msg, LogLevel::Warning);
-        cmx::logger.log(msg, LogLevel::Error);
+        cmx::logger.log(msg, LogLevel::Error);\
         cmx::logger.log(msg, LogLevel::Fatal);
     }
+    cmx::logger.hideLoggerName();
+    cmx::logger.log("End of AutoTest");
 }
 
 int main() {
@@ -107,6 +109,7 @@ int main() {
     cmx::logger.setCurrentLevel(LogLevel::LogSystem);
     cmx::logger.log("End of Autotest\t\t\n ************************************************");
     manualTest();
+
     cmx::logger.log("End of Manual test\t\t\n ************************************************");
     cmx::logger.clearConsoleBuffer();
 
@@ -120,5 +123,5 @@ int main() {
     std::cin.get();
 
 
-    //benchmarkTest();
+    benchmarkTest();
 }

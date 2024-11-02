@@ -29,6 +29,6 @@ PYBIND11_MODULE(mxLogPy, m) {
             .def("setBufferSize", &LogManager::setBufferSize)
             .def("clearConsoleBuffer", &LogManager::clearConsoleBuffer)
             .def("setLoggerName", &LogManager::setLoggerName)
-            .def("showLogerName", &LogManager::showLogerName)
-            .def("hideLoggerName", &LogManager::hideLogerName);
+            .def("showLoggerName", &LogManager::showLoggerName)
+            .def("hideLoggerName", &LogManager::hideLoggerName);
 }

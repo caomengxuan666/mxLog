@@ -55,11 +55,11 @@ namespace cmx::Log {
             logger->setLoggerName(name);
         }
 
-        void hideLogerName(){
+        void hideLoggerName(){
             logger->hideLoggerName();
         }
 
-        void showLogerName(){
+        void showLoggerName(){
             logger->showLoggerName();
         }
 

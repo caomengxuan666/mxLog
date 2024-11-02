@@ -10,7 +10,7 @@ namespace cmx::Log {
 
     class ConsoleAppender : public Appender {
     public:
-        ConsoleAppender(size_t bufferSize = 4096); // 默认缓存区大小为 4096
+        ConsoleAppender(size_t bufferSize=1024); // 默认缓存区大小为 1024
         inline void append(const std::string &formattedMessage) noexcept override;
         ~ConsoleAppender(); // 确保析构时清空缓冲区
 
