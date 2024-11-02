@@ -24,9 +24,11 @@ PYBIND11_MODULE(mxLogPy, m) {
             .def("setCurrentLevel", &LogManager::setCurrentLevel)
             .def("setFileAppender", &LogManager::setFileAppender)
             .def("setConsoleAppender", &LogManager::setConsoleAppender)
-            .def("log", &LogManager::log, py::arg("level"), py::arg("message")) // 确保参数顺序
+            .def("log", &LogManager::log, py::arg("level"), py::arg("message"))// 确保参数顺序
             .def("setOutBufferSize", &LogManager::setOutBufferSize)
             .def("setBufferSize", &LogManager::setBufferSize)
             .def("clearConsoleBuffer", &LogManager::clearConsoleBuffer)
-            .def("setLoggerName", &LogManager::setLoggerName);
+            .def("setLoggerName", &LogManager::setLoggerName)
+            .def("showLoggerName", &LogManager::showLoggerName)
+            .def("hideLoggerName", &LogManager::hideLoggerName);
 }
