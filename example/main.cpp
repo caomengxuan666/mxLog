@@ -17,8 +17,8 @@ void benchmarkTest() {
 
     auto start = std::chrono::high_resolution_clock::now();
     cmx::logger.log("Benchmark test");
-    cmx::logger.setBufferSize(test_epoch / 10);
-    cmx::logger.setOutBufferSize(test_epoch / 10);
+    cmx::logger.setBufferSize(test_epoch / 10000);
+    cmx::logger.setOutBufferSize(test_epoch / 10000);
 
     cmx::logger.setCurrentLevel(LogLevel::Info);
     for (int i = 0; i < test_epoch; i++) {

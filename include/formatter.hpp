@@ -11,10 +11,6 @@ namespace cmx::Log {
         virtual std::string format(const std::string& message, LogLevel level) const = 0;
     };
 
-    class SimpleFormatter : public Formatter {
-    public:
-        std::string format(const std::string& message, LogLevel level) const override;
-    };
 
 } // namespace cmx::Log
 

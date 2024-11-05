@@ -51,6 +51,7 @@ namespace cmx::Log {
         freeRestOfBuffer();
         messageBuffer.clear(); // 先清空
         messageBuffer.resize(newSize); // 调整缓存区大小
+        //todo,这里需要控制formatter里面的缓存大小
     }
 
 } // namespace cmx::Log

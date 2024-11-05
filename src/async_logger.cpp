@@ -2,6 +2,7 @@
 #include "appender.hpp"
 #include "file_appender.hpp"
 #include "formatter.hpp"
+#include "SimpleFormatter.hpp"
 
 namespace cmx::Log {
 

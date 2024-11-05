@@ -11,6 +11,7 @@
 #include "appender.hpp"
 #include "console_appender.hpp"
 
+
 namespace cmx::Log {
 
     class AsyncLogger {
