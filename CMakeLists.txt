@@ -25,6 +25,7 @@ else ()
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
 endif ()
 
+
 # 添加静态库
 add_library(mxLogLib STATIC
         src/console_appender.cpp
